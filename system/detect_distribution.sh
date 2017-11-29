@@ -24,8 +24,10 @@ elif [ -f /etc/SuSe-release ]; then
     VER=$VERSION
 elif [ -f /etc/redhat-release ]; then
     # Older Red Hat, CentOS, etc.
+    OS_MAJOR_VERSION=`sed -rn 's/.*([0-9])\.[0-9].*/\1/p' /etc/redhat-release`
+    OS_MINOR_VERSION=`sed -rn 's/.*[0-9].([0-9]).*/\1/p' /etc/redhat-release`
     OS="Red Hat based"
-    VER=$(cat /etc/redhat-release)
+    VER="${OS_MAJOR_VERSION}.${OS_MINOR_VERSION}"
 else
     # Fall back to uname, e.g. "Linux <version>", also works for BSD, etc.
     OS=$(uname -s)
